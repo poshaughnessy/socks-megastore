@@ -51,6 +51,7 @@
         color: #fff;
         border: 0;
         font-size: 1.2em;
+        margin-top: 1em;
       }
       @media (min-width: 500px) {
         ul {
@@ -118,12 +119,15 @@
 
         var methodData = [{
           // We're taking a card payment. Other options should come in the future.
+          /*
           supportedMethods: ['basic-card'],
           data: {
             // Example payment networks
             supportedNetworks: ['visa', 'mastercard', 'amex'],
             supportedTypes: ['debit', 'credit']
           }
+          */
+          supportedMethods: ['visa', 'mastercard', 'amex']
         }];
 
         var details = {
@@ -141,15 +145,16 @@
           // If you include requestShipping then you need at least one shipping option
           // NB. If you have multiple options you can handle the selection by adding a
           // 'shippingoptionchange' event handler 
-          shippingOptions: [
-            {
-              id: 'free',
-              label: 'Free shipping',
-              amount: {currency: 'GBP', value: '0.00'},
-              selected: true,
-            }
-          ]
+          // shippingOptions: [
+          //   {
+          //     id: 'free',
+          //     label: 'Free shipping',
+          //     amount: {currency: 'GBP', value: '0.00'},
+          //     selected: true,
+          //   }
+          // ]
         };
+        /*
         var options = { 
           requestPayerName: true,
           requestPayerEmail: true, 
@@ -157,27 +162,47 @@
           requestShipping: true,
           shippingType: 'delivery'
         };
+        */
+        var options = null;
 
-        purchaseBtn.addEventListener('click', function() {
-          if (window.PaymentRequest) {
-            new PaymentRequest(methodData, details, options)
-              .show()
-              .then(function(uiResult) {
-                processPaymentDetails(uiResult)
-                  .then(function(uiResult) {
-                    uiResult.complete('success');
-                    showSuccess();
-                  });
-              })
-              .catch(function(error) {
-                console.warn('Unable to complete purchase', error);
-                alert('Oh no! There was a problem completing the purchase: ' + error);
-              });
-          } else {
-            alert('Oh no! This browser does not support the Payment Request API. ' +  
-              'Another method should be provided here!');
-          }
-        });
+        var paymentRequest;
+
+        function onClickPurchase() {
+
+          paymentRequest.show()
+            .then(function(uiResult) {
+              processPaymentDetails(uiResult)
+                .then(function(uiResult) {
+                  console.log('Success');
+                  uiResult.complete('success');
+                  showSuccess();
+                });
+            })
+            .catch(function(error) {
+              console.warn('Unable to complete purchase', error);
+              alert('Oh no! There was a problem completing the purchase: ' + error);
+            });
+
+        }
+
+        if (window.PaymentRequest) {
+
+          // Set up Payment Request
+
+          paymentRequest = new PaymentRequest(methodData, details, options);
+
+          purchaseBtn.addEventListener('click', onClickPurchase);
+
+          paymentRequest.addEventListener('shippingaddresschange', function(evt) {
+            // Omitting for this demo, but we could process any changes to 
+            // e.g. delivery costs, due to the shipping address changing here.
+            console.log('Shipping address changed', evt);
+          });
+
+        } else {
+          alert('Oh no! This browser does not support the Payment Request API. ' +  
+            'Another method should be provided here!');
+        }
       </script>
 
     </main>    
