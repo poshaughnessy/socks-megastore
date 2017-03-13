@@ -32,7 +32,7 @@
         font-style: italic;
       }
       main {
-        padding: 10px;
+        padding: 10px 10px 30px 10px;
       }
       h3 {
         font-size: 1.5em;
@@ -104,6 +104,18 @@
           purchaseBtn.innerHTML = 'Purchased!';
         }
 
+        /**
+         * Here is where we would send the payment info to the server / payment gateway for processing,
+         * but I'm not quite ready to take real money from you yet 😉 Simulating by just waiting 2 secs.
+         */
+        function processPaymentDetails(uiResult) {
+          return new Promise(function (resolve) {
+            setTimeout(function() {
+              resolve(uiResult);
+            }, 2000);
+          });
+        }
+
         var methodData = [{
           // We're taking a card payment. Other options should come in the future.
           supportedMethods: ['basic-card'],
@@ -159,7 +171,7 @@
               })
               .catch(function(error) {
                 console.warn('Unable to complete purchase', error);
-                alert('Oh no! There was a problem completing the purchase');
+                alert('Oh no! There was a problem completing the purchase: ' + error);
               });
           } else {
             alert('Oh no! This browser does not support the Payment Request API. ' +  
