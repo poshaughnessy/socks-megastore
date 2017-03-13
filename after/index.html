@@ -119,15 +119,12 @@
 
         var methodData = [{
           // We're taking a card payment. Other options should come in the future.
-          /*
-          supportedMethods: ['basic-card'],
+          supportedMethods: ['basic-card', 'visa', 'mastercard', 'amex'],
           data: {
             // Example payment networks
             supportedNetworks: ['visa', 'mastercard', 'amex'],
             supportedTypes: ['debit', 'credit']
-          }
-          */
-          supportedMethods: ['visa', 'mastercard', 'amex']
+          }          
         }];
 
         var details = {
@@ -145,16 +142,15 @@
           // If you include requestShipping then you need at least one shipping option
           // NB. If you have multiple options you can handle the selection by adding a
           // 'shippingoptionchange' event handler 
-          // shippingOptions: [
-          //   {
-          //     id: 'free',
-          //     label: 'Free shipping',
-          //     amount: {currency: 'GBP', value: '0.00'},
-          //     selected: true,
-          //   }
-          // ]
+          shippingOptions: [
+            {
+              id: 'free',
+              label: 'Free shipping',
+              amount: {currency: 'GBP', value: '0.00'},
+              selected: true,
+            }
+          ]
         };
-        /*
         var options = { 
           requestPayerName: true,
           requestPayerEmail: true, 
@@ -162,8 +158,6 @@
           requestShipping: true,
           shippingType: 'delivery'
         };
-        */
-        var options = null;
 
         var paymentRequest;
 
