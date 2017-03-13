@@ -4,6 +4,7 @@
     <title>Socks Megastore</title>
     <meta name="description" content="For all your online sock needs">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="images/socks-emoji-purple.png" type="image/png">
     <style>
       body {
         padding: 0;
@@ -17,7 +18,7 @@
       header img {
         height: 1.25em;
         position: relative;
-        top: 10px; 
+        top: 10px;
         left: -5px;
       }
       h1, h2 {
@@ -30,15 +31,20 @@
       h2 {
         font-size: 1.2em;
         font-style: italic;
+        margin-bottom: 0.5em;
+        font-weight: normal;
       }
       main {
-        padding: 10px 10px 30px 10px;
+        padding: 10px 15px 30px 15px;
       }
       h3 {
         font-size: 1.5em;
       }
       ul {
         position: relative;
+      }
+      ul li {
+        margin-bottom: 0.5em;
       }
       #socks {
         max-width: 100%;
@@ -54,6 +60,9 @@
         margin-top: 1em;
       }
       @media (min-width: 500px) {
+        main {
+          padding: 10px 20px 30px 20px;
+        }
         ul {
           left: 20px;
         }
@@ -64,7 +73,8 @@
         }
         #purchase {
           width: 250px;
-          width: calc(100% - 270px);
+          width: calc(100% - 280px);
+          border-radius: 5px;
         }
       }
     </style>
@@ -83,20 +93,21 @@
       <h4>Price: &pound;12  &middot;  Shipping: &pound;1.50</h4>
 
       <p>
-        Featuring Samsung Internet's classic logo, these socks are instantly retro.
-        A firm favourite for web developers, evoking the themes of Progressive Web Apps, 
-        HTML5, Physical Web, WebVR and web gaming. Show off your love for the web <em>and</em> 
-        keep your feet warm at the same time.
+        Featuring Samsung Internet's classic logo, these socks are an instant retro hit.
+        A firm favourite for web developers, evoking themes of Progressive Web Apps,
+        HTML5, Physical Web, WebVR and web gaming.
       </p>
+
+      <p>Show off your love for the web <em>and</em> keep your feet warm at the same time.</p>
 
       <ul>
         <li>Unique, limited edition design</li>
-        <li>100% cotton</li>
-        <li>Available in Samsung Internet purple</li>
+        <li>100% cotton for durability &amp; comfort</li>
+        <li>Available in Samsung Internet purple only</li>
       </ul>
 
       <div><button id="purchase">Purchase</button></div>
-            
+
       <script type="text/javascript">
 
         var purchaseBtn = document.getElementById('purchase');
@@ -124,7 +135,7 @@
             // Example payment networks
             supportedNetworks: ['visa', 'mastercard', 'amex'],
             supportedTypes: ['debit', 'credit']
-          }          
+          }
         }];
 
         var details = {
@@ -141,7 +152,7 @@
           ],
           // If you include requestShipping then you need at least one shipping option
           // NB. If you have multiple options you can handle the selection by adding a
-          // 'shippingoptionchange' event handler 
+          // 'shippingoptionchange' event handler
           shippingOptions: [
             {
               id: 'free',
@@ -151,9 +162,9 @@
             }
           ]
         };
-        var options = { 
+        var options = {
           requestPayerName: true,
-          requestPayerEmail: true, 
+          requestPayerEmail: true,
           requestPayerPhone: true,
           requestShipping: true,
           shippingType: 'delivery'
@@ -188,16 +199,16 @@
           purchaseBtn.addEventListener('click', onClickPurchase);
 
           paymentRequest.addEventListener('shippingaddresschange', function(evt) {
-            // Omitting for this demo, but we could process any changes to 
+            // Omitting for this demo, but we could process any changes to
             // e.g. delivery costs, due to the shipping address changing here.
             console.log('Shipping address changed', evt);
           });
 
         } else {
-          alert('Oh no! This browser does not support the Payment Request API. ' +  
+          console.error('Oh no! This browser does not support the Payment Request API. ' +
             'Another method should be provided here!');
         }
       </script>
 
-    </main>    
+    </main>
   </body>
